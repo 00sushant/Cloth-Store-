@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloth Store</title>
+    <script type="module" src="firebaseConfig.js"></script>
+    <script type="module" src="auth.js"></script>
+    <script type="module">
+        import { signup, login, googleLogin } from './auth.js';
+
+        async function handleSignup() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            alert('Attempting to sign up with: ' + email); // Debugging alert
+            try {
+                const user = await signup(email, password);
+                alert('User signed up: ' + user.email);
+            } catch (error) {
+                alert('Error signing up: ' + error.message);
+            }
+        }
+
+        async function handleLogin() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            alert('Attempting to log in with: ' + email); // Debugging alert
+            try {
+                const user = await login(email, password);
+                alert('User logged in: ' + user.email);
+            } catch (error) {
+                alert('Error logging in: ' + error.message);
+            }
+        }
+
+        async function handleGoogleLogin() {
+            try {
+                const user = await googleLogin();
+                alert('User logged in with Google: ' + user.email);
+            } catch (error) {
+                alert('Error with Google login: ' + error.message);
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Welcome to the Cloth Store</h1>
+    <p>Your Firebase application is running!</p>
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+          background-color: #fff;
+          color: #333;
+        }
+        header {
+          background-color: orange;
+          color: white;
+          padding: 10px;
+          text-align: center;
+        }
+        .container {
+          width: 80%;
+          margin: 0 auto;
+        }
+        .auth-buttons {
+          text-align: center;
+          margin-top: 50px;
+        }
+        .auth-button {
+          padding: 10px 20px;
+          background-color: #ff6f00;
+          border: none;
+          color: white;
+          cursor: pointer;
+          font-size: 16px;
+        }
+        .auth-button:hover {
+          background-color: #ff4f00;
+        }
+    </style>
+
+    <input type="email" id="email" placeholder="Email" required>
+    <input type="password" id="password" placeholder="Password" required>
+    <button onclick="handleSignup()">Sign Up</button>
+    <button onclick="handleLogin()">Log In</button>
+    <button onclick="handleGoogleLogin()">Google Sign-In</button>
+</body>
+</html>
